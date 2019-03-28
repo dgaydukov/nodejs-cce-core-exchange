@@ -33,6 +33,11 @@ interface UserBalance {
     balance: number;
 }
 
+interface BalanceHistory {
+    date: Date;
+    balance: UserBalance;
+}
+
 /**
  * basePrice means that for every btc you get 10 eth
  */
@@ -107,12 +112,32 @@ const fillBuyOrders = (n: number) => {
 const runEngine = (n: number) => {
     let _sell, _buy;
     setInterval(()=>{
+        console.log(
+            buyOrders.length,
+            sellOrders.length,
+            matchedOrders.length,
+        )
         const sell = _sell || sellOrders.shift();
         const buy = _buy || buyOrders.shift();
         if(sell.basePrice === buy.basePrice){
-            
+            // TODO: change users' balances
+            if(sell.sellAmount > buy.sellAmount){
+                sell.sellAmount = sell.sellAmount - buy.sellAmount;
+                sell.buyAmount = sell.buyAmount - buy.buyAmount;
+                _sell = sell;
+                matchedOrders.push(buy);
+            }
+            else if(sell.sellAmount < buy.sellAmount){
+                buy.sellAmount = buy.sellAmount - sell.sellAmount;
+                buy.buyAmount = buy.buyAmount - sell.buyAmount;
+                _buy = buy;
+                matchedOrders.push(sell);
+            }
+            else{
+                matchedOrders.push(buy);
+                matchedOrders.push(sell);
+            }
         }
-        
     }, n * 10**3); 
 }
 
