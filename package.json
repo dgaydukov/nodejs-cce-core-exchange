@@ -1,0 +1,22 @@
+{
+  "name": "order-matching-engine",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app/index.ts",
+  "scripts": {
+    "start": "ts-node-dev src/app/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "Dmitriy Gaydukov <gaydukov89@gmail.com>",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "6.0.0",
+    "ts-node": "8.0.2",
+    "ts-node-dev": "1.0.0-pre.32",
+    "typescript": "3.3.3"
+  }
+}
