@@ -9,7 +9,9 @@
 
 ### Description
 
-This project is a core of any exchange. It usually called `matching engine`, because here all orders is collected, executed against one another and balances are recalculated.
+This project is a core of any exchange. It consists of 2 subprojects (please note, that in real world exchange, this 2 should be different projects).
+* Balance service - is microservice that stores and handles all balanaces. After every successful trade affected balances are recalculated.
+* Mtching engine - is microservice where orders executed against one another. The algorithm is pretty simple. 
 
 
 ### Installation
@@ -32,13 +34,17 @@ npm start
 
 ### Built With
 
-* [Node.js v 10](https://nodejs.org/fr/blog/release/v10.0.0/)
+* [Node.js v10](https://nodejs.org/fr/blog/release/v10.0.0/)
 
 
 
 
 ### Project Structure
 ```
+balance-service - microservice to store and recalculate users' balances (when orders has been matched)
+matching-engine - microservice to match orders against each other
+helpers.ts - list of additional functions that are used across the project
+index.ts - application entrypoint
 ```
 
 

@@ -12,7 +12,10 @@
   },
   "author": "Dmitriy Gaydukov <gaydukov89@gmail.com>",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "koa": "2.7.0",
+    "koa-router": "7.4.0"
+  },
   "devDependencies": {
     "mocha": "6.0.0",
     "ts-node": "8.0.2",
