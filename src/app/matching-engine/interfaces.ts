@@ -1,4 +1,6 @@
-
+/**
+ * List of interfaces for matching engine
+ */
 
 export enum OrderType {
     Sell = 'sell',

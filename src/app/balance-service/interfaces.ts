@@ -1,3 +1,7 @@
+/**
+ * List of interfaces for balance service
+ */
+
 export interface UserBalance {
     userId: string;
     balance: number;
