@@ -1,9 +1,9 @@
-interface UserBalance {
+export interface UserBalance {
     userId: string;
     balance: number;
 }
 
-interface BalanceHistory {
+export interface BalanceHistory {
     date: Date;
     balance: UserBalance;
 }

@@ -4,6 +4,7 @@ import * as Router from 'koa-router';
 import * as bodyParser from 'koa-bodyparser';
 import * as HttpStatus from 'http-status-codes';
 const cors = require('@koa/cors');
+import MatchingEngine from './matching-engine/matching';
 
 
 const app = new Koa();
@@ -36,3 +37,6 @@ app.use(router.routes());
     await app.listen(process.env.APP_PORT);
     console.log(`core exchange is running... `);
 })();
+
+const engine = new MatchingEngine();
+engine.run();

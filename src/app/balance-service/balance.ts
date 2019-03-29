@@ -1,5 +1,5 @@
 
 
-export class BalanceService{
-    
+export default class BalanceService{
+
 }

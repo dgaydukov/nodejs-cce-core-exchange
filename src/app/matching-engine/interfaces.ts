@@ -1,16 +1,16 @@
 
 
-enum OrderType {
+export enum OrderType {
     Sell = 'sell',
     Buy = 'buy',
 }
 
-enum MathType {
+export enum MathType {
     Completed = 'completed',
     Partial = 'partial',
 }
 
-interface Order {
+export interface Order {
     orderId: string;
     type: OrderType,
     time: Date;
@@ -22,7 +22,7 @@ interface Order {
 }
 
 
-interface Match {
+export interface Match {
     sell: Order;
     buy: Order;
     type: MathType;
