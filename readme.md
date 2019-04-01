@@ -41,8 +41,10 @@ npm start
 
 ### Project Structure
 ```
+api - directory with all endpoints to communicate with microservice
 balance-service - microservice to store and recalculate users' balances (when orders has been matched)
 matching-engine - microservice to match orders against each other
+test - directory with tests
 helpers.ts - list of additional functions that are used across the project
 index.ts - application entrypoint
 ```
