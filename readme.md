@@ -62,3 +62,15 @@ To run tests, type in consoel `npm test`. This will run all tests under ./test f
 ### Authors
 
 * **Gaydukov Dmitiry** - *Take a look* - [How to become a Senior Javascript Developer](https://github.com/dgaydukov/how-to-become-a-senior-js-developer)
+
+
+### Plan
+```
+1. Create balance instance
+2. Create matching engine instance with balance instance as constructor paramets
+3. populate balance with api
+4. api for fetching single balances and matched orders (and general number of orders)
+5. api for setting and cancelling orders
+
+But at first simple method in balances to create orders, just to check algorithm
+```
