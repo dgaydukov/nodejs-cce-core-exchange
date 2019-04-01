@@ -4,28 +4,6 @@ import { BalanceHistory } from '../balance-service/interfaces';
 
 
 export default class MatchingEngine{
-    /**
-     * basePrice means that for every btc you get 10 eth
-     */
-    CryptoPair = {
-        id: '20d2f0f3-dd63-4cd2-9c33-0ca4654918f3',
-        name: 'btc/eth',
-        basePrice: 10,
-    }
-
-    genGuids(n: number){
-        const arr = [];
-        for(let i = 0; i < n; i++){
-            arr.push(guid());
-        }
-        return arr;
-    }
-
-    /**
-     * pregenerate an array of N users
-     */
-    userNumber = 10**2;
-    userIdList = this.genGuids(this.userNumber);
 
     /**
      * The sorting for the sell is descending and for the buy is ascending

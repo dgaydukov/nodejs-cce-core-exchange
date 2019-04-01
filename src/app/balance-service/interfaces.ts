@@ -13,6 +13,13 @@ export interface Currency {
     name: string;
 }
 
+export interface TradePair {
+    pairId: string;
+    buy: Currency;
+    sell: Currency;
+    baseRate: number;
+}
+
 export interface BalanceHistory {
     userId: string;
     date: Date;
