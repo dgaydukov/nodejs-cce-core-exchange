@@ -1,6 +1,6 @@
 import { guid, getRand } from '../helpers';
 import { OrderType, Order } from './interfaces';
-import { UserBalance, BalanceHistory } from '../balance-service/interfaces';
+import { BalanceHistory } from '../balance-service/interfaces';
 
 
 export default class MatchingEngine{
