@@ -5,6 +5,8 @@
 * [Installation](#installation)
 * [Built With](#built-with)
 * [Project Structure](#project-structure)
+* [API](#api)
+* [Running tests](#running-tests)
 * [Authors](#authors)
 
 ### Description
@@ -48,6 +50,11 @@ test - directory with tests
 helpers.ts - list of additional functions that are used across the project
 index.ts - application entrypoint
 ```
+
+### API
+
+### Running tests
+To run tests, type in consoel `npm test`. This will run all tests under ./test folder. If you want to run specific file, try `npm run test:main`. Change filename in `package.json`.
 
 
 ### Authors
