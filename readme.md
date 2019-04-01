@@ -53,6 +53,8 @@ index.ts - application entrypoint
 
 ### API
 
+All API calls are under `./src/app/api` folder. For the demonstration purpose all endpoints made as simple HTTP REST service. In real-world application, this is not a good approach, in terms of speed and availability. So in real exchange you would better to use `websocket` or any message broker, like `kafka`.
+
 ### Running tests
 To run tests, type in consoel `npm test`. This will run all tests under ./test folder. If you want to run specific file, try `npm run test:main`. Change filename in `package.json`.
 

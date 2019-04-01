@@ -1,9 +1,10 @@
 import { guid, getRand } from '../helpers';
 import { OrderType, Order } from './interfaces';
-import { BalanceHistory } from '../balance-service/interfaces';
+import BalanceService from '../balance-service/balance';
 
 
 export default class MatchingEngine{
+    service: BalanceService;
 
     /**
      * The sorting for the sell is descending and for the buy is ascending

@@ -1,7 +1,7 @@
 import { Currency, BalanceHistory, TradePair, User } from "./interfaces";
 
 
-export default class BalanceService{
+export default class BalanceService {
     numberOfUsers: number;
     currencies: Currency[];
     tradePairs: TradePair[];
