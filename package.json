@@ -4,7 +4,8 @@
   "description": "",
   "main": "src/app/index.ts",
   "scripts": {
-    "start": "ts-node-dev src/app/index.ts"
+    "start": "ts-node-dev src/app/index.ts",
+    "test:main": "./node_modules/mocha/bin/mocha --timeout=10000 --require=ts-node/register test/main.ts"
   },
   "repository": {
     "type": "git",
@@ -14,7 +15,9 @@
   "license": "ISC",
   "dependencies": {
     "@koa/cors": "3.0.0",
+    "@types/mocha": "5.2.6",
     "@types/node": "11.12.0",
+    "chai": "4.2.0",
     "http-status-codes": "1.3.2",
     "koa": "2.7.0",
     "koa-bodyparser": "4.2.1",
