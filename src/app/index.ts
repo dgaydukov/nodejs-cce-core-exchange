@@ -44,8 +44,31 @@ app.use(router.routes());
  * We use init function to test the project
  */
 const balancer = new BalanceService();
-balancer.init(1000);
+const numberOfUsers = 1000;
+const currencies = [
+    {
+        id: '4648639a-f1aa-42ee-997e-70a4cf925198',
+        code: 'BTC',
+        name: 'Bitcoin',
+    },
+    {
+        id: '5eabb8dc-15fc-469c-a003-b5d8a20bbff8',
+        code: 'ETH',
+        name: 'Ethereum',
+    }
+];
+const tradePairs = [
+    {
+        pairId: '5985aa36-cda7-4545-8577-8a3157507385',
+        buy: currencies[0],
+        sell: currencies[1],
+        baseRate: 10,
+    }
+];
+balancer.init(numberOfUsers, currencies, tradePairs);
 
 const engine = new MatchingEngine(balancer);
-engine.init();
+const numberOfOrders = 10000;
+const timeInterval = 30;
+engine.init(numberOfOrders, timeInterval);
 engine.run();

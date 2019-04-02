@@ -12,10 +12,10 @@ export default class BalanceService {
         this.history = [];
     }
 
-    init(numberOfUsers: number){
+    init(numberOfUsers: number, currencies: Currency[], tradePairs: TradePair[]){
         this.numberOfUsers = numberOfUsers;
-        this.currencies = [];
-        this.tradePairs = [];
+        this.currencies = currencies;
+        this.tradePairs = tradePairs;
     }
 
     getUserBalance(userId: string, currencyId: string){

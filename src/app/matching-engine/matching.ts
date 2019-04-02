@@ -12,6 +12,8 @@ export default class MatchingEngine{
     buyOrders: Order[];
     matchedOrders: Match[];
 
+    basePrice = 10;
+    
     constructor(service: BalanceService){
         this.service = service;
         this.sellOrders = [];
@@ -19,7 +21,12 @@ export default class MatchingEngine{
         this.matchedOrders = [];
     }
 
-    init(){
+    /**
+     * How many orders should be set during specified time interval
+     * @param numberOfOrders 
+     * @param timeInterval 
+     */
+    init(numberOfOrders: number, timeInterval: number){
         
     }
 
@@ -29,13 +36,13 @@ export default class MatchingEngine{
             orderId: guid(),
             type,
             time: new Date(),
-            pairId: this.CryptoPair.id,
+            pairId: '',
             userId,
             sellAmount,
             buyAmount,
             basePrice,
         }
-        const len = list.length;
+        const len = list.length
         let index = len;
         for(let i = 0; i < len; i++){
             if(list[i].basePrice >= item.basePrice){
@@ -48,18 +55,18 @@ export default class MatchingEngine{
 
     fillSellOrders(n: number){
         setInterval(()=>{
-            const userId = this.userIdList[getRand(0, this.userNumber)];
+            const userId = '';
             const sellAmount = getRand(1, 10);
-            const basePrice = this.CryptoPair.basePrice/2 + getRand(0, this.CryptoPair.basePrice);
+            const basePrice = this.basePrice/2 + getRand(0, this.basePrice);
             this.addOrder(OrderType.Sell, this.sellOrders, userId, basePrice, sellAmount, basePrice * sellAmount);
         }, n * 10**3);
     }
 
     fillBuyOrders(n: number){
         setInterval(()=>{
-            const userId = this.userIdList[getRand(0, this.userNumber)];
-            const buyAmount = getRand(1, 10) * this.CryptoPair.basePrice;
-            const basePrice = this.CryptoPair.basePrice - getRand(0, this.CryptoPair.basePrice/2);
+            const userId = '';
+            const buyAmount = getRand(1, 10) * this.basePrice;
+            const basePrice = this.basePrice - getRand(0, this.basePrice/2);
             this.addOrder(OrderType.Buy, this.buyOrders, userId, basePrice, buyAmount, buyAmount * basePrice);
         }, n * 10**3);
     }
