@@ -11,7 +11,7 @@
 
 ### Description
 
-This project is a core of any exchange. It consists of 2 subprojects (please note, that in real world exchange, this 2 should be different projects).
+This project is a core of any exchange. It's part of my exchange, that include my other repos. It consists of 2 subprojects (please note, that in real world exchange, this 2 should be different projects).
 * Balance service - is microservice that stores and handles all balanaces. After every successful trade affected balances are recalculated.
 * Mtching engine - is microservice where orders executed against one another. The algorithm is pretty simple. 
 
@@ -54,12 +54,14 @@ In case you want to stop dockerized version, just type `docker-compose down`. Th
 
 ### Project Structure
 ```
-api - directory with all endpoints to communicate with microservice
-balance-service - microservice to store and recalculate users' balances (when orders has been matched)
-matching-engine - microservice to match orders against each other
-test - directory with tests
-helpers.ts - list of additional functions that are used across the project
-index.ts - application entrypoint
+src # directory with main project
+    api # directory with all endpoints to communicate with microservice
+    balance-service # microservice to store and recalculate users' balances (when orders has been matched)
+    matching-engine # microservice to match orders against each other
+    test # directory with tests
+    helpers.ts # list of additional functions that are used across the project
+    index.ts # application entrypoint
+test # directory with tests
 ```
 
 ### API
@@ -67,7 +69,7 @@ index.ts - application entrypoint
 All API calls are under `./src/app/api` folder. For the demonstration purpose all endpoints made as simple HTTP REST service. In real-world application, this is not a good approach, in terms of speed and availability. So in real exchange you would better to use `websocket` or any message broker, like `kafka`.
 
 ### Running tests
-To run tests, type in consoel `npm test`. This will run all tests under ./test folder. If you want to run specific file, try `npm run test:main`. Change filename in `package.json`.
+To run tests, type in console `npm test`. This will run all tests under `./test` folder. If you want to run specific file, try `npm run test:main`. Change filename in `package.json`.
 
 
 ### Authors
