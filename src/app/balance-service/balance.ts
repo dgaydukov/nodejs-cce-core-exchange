@@ -1,8 +1,8 @@
 import { Currency, BalanceHistory, TradePair, User } from "./interfaces";
+import { guid, getRand } from "../helpers";
 
 
 export default class BalanceService {
-    numberOfUsers: number;
     currencies: Currency[];
     tradePairs: TradePair[];
     history: BalanceHistory[];
@@ -10,12 +10,54 @@ export default class BalanceService {
 
     constructor(){
         this.history = [];
+        this.users = [];
     }
 
     init(numberOfUsers: number, currencies: Currency[], tradePairs: TradePair[]){
-        this.numberOfUsers = numberOfUsers;
         this.currencies = currencies;
         this.tradePairs = tradePairs;
+
+        /**
+         * generate users with random balances
+         */
+        for(let i = 0; i < numberOfUsers; i++){
+            const user = {
+                userId: guid(),
+                balances: [],
+            }
+            this.currencies.map(currency=>{
+                // 50% change to include currency into balance
+                if(Math.round(Math.random()) === 1){
+                    const balance = {
+                        currency,
+                        balance: getRand(1, 1000),
+                    };
+                    user.balances.push(balance);
+                }
+            });
+            this.users.push(user);
+        }
+    }
+
+    getTotalBalance(){
+        // clone currencies
+        const balances: any = [...this.currencies];
+        balances.map(curr=>{
+            curr.users = 0;
+            curr.balance = 0;
+            this.users.map(user=>{
+                const balance = user.balances.find(k=>k.currency.id===curr.id);
+                if(balance){
+                    curr.users++;
+                    curr.balance += balance.balance;
+                }
+            })
+        });
+        return balances;
+    }
+
+    getUserIds(){
+        return this.users.map(k=>k.userId);
     }
 
     getUserBalance(userId: string, currencyId: string){

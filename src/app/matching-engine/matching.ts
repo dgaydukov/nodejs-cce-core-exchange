@@ -106,9 +106,9 @@ export default class MatchingEngine{
 
 
     run(){
-        this.fillSellOrders(1);
-        this.fillBuyOrders(1);
-        this.runEngine(5);
+        // this.fillSellOrders(1);
+        // this.fillBuyOrders(1);
+        // this.runEngine(5);
     }
 }
 
