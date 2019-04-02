@@ -33,6 +33,15 @@ npm i
 npm start
 ```
 
+You can also run dockerized version of this app
+```shell
+# copy env variables
+cp .env.tpl .env
+
+# build and run app
+docker-compose up -d --build
+```
+
 
 ### Built With
 

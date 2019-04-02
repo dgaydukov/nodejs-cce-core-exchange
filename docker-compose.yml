@@ -8,6 +8,4 @@ services:
       - ${EXTERNAL_APP_PORT}:${APP_PORT}
     environment:
       - APP_PORT=${APP_PORT}
-    depends_on: 
-      - db
       

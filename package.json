@@ -5,6 +5,7 @@
   "main": "src/app/index.ts",
   "scripts": {
     "start": "ts-node-dev src/app/index.ts",
+    "prod": "ts-node src/app/index.ts",
     "test": "./node_modules/mocha/bin/mocha --timeout=10000 --require=ts-node/register test/*.ts",
     "test:main": "./node_modules/mocha/bin/mocha --timeout=10000 --require=ts-node/register test/main.ts"
   },
