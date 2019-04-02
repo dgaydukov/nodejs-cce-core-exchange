@@ -1,3 +1,8 @@
+/**
+ * This is the main class responsible for balances handling
+ * All trades and changed balances should be stored here
+ */
+
 import { Currency, BalanceHistory, TradePair, User } from "./interfaces";
 import { guid, getRand } from "../helpers";
 
@@ -8,26 +13,26 @@ export default class BalanceService {
     history: BalanceHistory[];
     users: User[]
 
-    constructor(){
+    constructor() {
         this.history = [];
         this.users = [];
     }
 
-    init(numberOfUsers: number, currencies: Currency[], tradePairs: TradePair[]){
+    init(numberOfUsers: number, currencies: Currency[], tradePairs: TradePair[]) {
         this.currencies = currencies;
         this.tradePairs = tradePairs;
 
         /**
          * generate users with random balances
          */
-        for(let i = 0; i < numberOfUsers; i++){
+        for (let i = 0; i < numberOfUsers; i++) {
             const user = {
                 userId: guid(),
                 balances: [],
             }
-            this.currencies.map(currency=>{
+            this.currencies.map(currency => {
                 // 50% change to include currency into balance
-                if(Math.round(Math.random()) === 1){
+                if (Math.round(Math.random()) === 1) {
                     const balance = {
                         currency,
                         balance: getRand(1, 1000),
@@ -39,15 +44,15 @@ export default class BalanceService {
         }
     }
 
-    getTotalBalance(){
+    getTotalBalance() {
         // clone currencies
         const balances: any = [...this.currencies];
-        balances.map(curr=>{
+        balances.map(curr => {
             curr.users = 0;
             curr.balance = 0;
-            this.users.map(user=>{
-                const balance = user.balances.find(k=>k.currency.id===curr.id);
-                if(balance){
+            this.users.map(user => {
+                const balance = user.balances.find(k => k.currency.id === curr.id);
+                if (balance) {
                     curr.users++;
                     curr.balance += balance.balance;
                 }
@@ -56,34 +61,34 @@ export default class BalanceService {
         return balances;
     }
 
-    getUserIds(){
-        return this.users.map(k=>k.userId);
+    getUserIds() {
+        return this.users.map(k => k.userId);
     }
 
-    getUserBalance(userId: string, currencyId: string){
-        const user = this.users.find(k=>k.userId === userId);
-        if(!user){
+    getUserBalance(userId: string, currencyId: string) {
+        const user = this.users.find(k => k.userId === userId);
+        if (!user) {
             throw new Error(`User hasn't been found`);
         }
-        const balance = user.balances.find(k=>k.currency.id === currencyId);
+        const balance = user.balances.find(k => k.currency.id === currencyId);
         return balance ? balance.balance : 0;
     }
 
-    setUserBalance(userId: string, currencyId: string, amount: number){
-        const user = this.users.find(k=>k.userId === userId);
-        if(!user){
+    setUserBalance(userId: string, currencyId: string, amount: number) {
+        const user = this.users.find(k => k.userId === userId);
+        if (!user) {
             throw new Error(`User hasn't been found`);
         }
-        const balance = user.balances.find(k=>k.currency.id === currencyId);
-        if(balance){
+        const balance = user.balances.find(k => k.currency.id === currencyId);
+        if (balance) {
             balance.balance = amount;
         }
-        else{
-            const currency = this.currencies.find(k=>k.id == currencyId);
-            if(!currency){
+        else {
+            const currency = this.currencies.find(k => k.id == currencyId);
+            if (!currency) {
                 throw new Error(`Trying to set balance for currency outside of the available list`);
             }
-            user.balances.push({currency, balance: amount})
+            user.balances.push({ currency, balance: amount })
         }
     }
 }

@@ -1,10 +1,16 @@
+/**
+ * Main class responsible for order matching
+ * Takes tradePair as constructor params. 
+ * If you want to create matching for 10 tradPairs, create 10 instances of this class
+ */
+
 import { guid, getRand } from '../helpers';
 import { OrderType, Order, Match } from './interfaces';
 import BalanceService from '../balance-service/balance';
 import { TradePair } from '../balance-service/interfaces';
 
 
-export default class MatchingEngine{
+export default class MatchingEngine {
     service: BalanceService;
     tradePair: TradePair;
     /**
@@ -13,8 +19,8 @@ export default class MatchingEngine{
     sellOrders: Order[];
     buyOrders: Order[];
     matchedOrders: Match[];
-    
-    constructor(service: BalanceService, tradePair: TradePair){
+
+    constructor(service: BalanceService, tradePair: TradePair) {
         this.service = service;
         this.tradePair = tradePair;
         this.sellOrders = [];
@@ -27,14 +33,14 @@ export default class MatchingEngine{
      * @param numberOfOrders 
      * @param timeInterval 
      */
-    init(numberOfOrders: number, timeInterval: number){
-        const step = Math.ceil(numberOfOrders/timeInterval);
-        const interval = setInterval(()=>{
-            if(timeInterval === 0){
+    init(numberOfOrders: number, timeInterval: number) {
+        const step = Math.ceil(numberOfOrders / timeInterval);
+        const interval = setInterval(() => {
+            if (timeInterval === 0) {
                 clearInterval(interval);
             }
             timeInterval--;
-            for(let i = 0; i < step; i++){
+            for (let i = 0; i < step; i++) {
                 this.fillSellOrders();
                 this.fillBuyOrders();
             }
@@ -42,7 +48,7 @@ export default class MatchingEngine{
     }
 
 
-    addOrder(type: OrderType, list: Order[], userId: string, basePrice: number, sellAmount: number, buyAmount: number){
+    addOrder(type: OrderType, list: Order[], userId: string, basePrice: number, sellAmount: number, buyAmount: number) {
         const item = {
             orderId: guid(),
             type,
@@ -55,8 +61,8 @@ export default class MatchingEngine{
         }
         const len = list.length
         let index = len;
-        for(let i = 0; i < len; i++){
-            if(list[i].basePrice >= item.basePrice){
+        for (let i = 0; i < len; i++) {
+            if (list[i].basePrice >= item.basePrice) {
                 index = i;
                 break;
             }
@@ -64,24 +70,24 @@ export default class MatchingEngine{
         list.splice(index, 0, item);
     }
 
-    fillSellOrders(){
+    fillSellOrders() {
         const userId = '';
         const sellAmount = getRand(1, 10);
-        const basePrice = this.tradePair.baseRate/2 + getRand(0, this.tradePair.baseRate);
+        const basePrice = this.tradePair.baseRate / 2 + getRand(0, this.tradePair.baseRate);
         this.addOrder(OrderType.Sell, this.sellOrders, userId, basePrice, sellAmount, basePrice * sellAmount);
     }
 
-    fillBuyOrders(){
+    fillBuyOrders() {
         const userId = '';
         const buyAmount = getRand(1, 10) * this.tradePair.baseRate;
-        const basePrice = this.tradePair.baseRate - getRand(0, this.tradePair.baseRate/2);
+        const basePrice = this.tradePair.baseRate - getRand(0, this.tradePair.baseRate / 2);
         this.addOrder(OrderType.Buy, this.buyOrders, userId, basePrice, buyAmount, buyAmount * basePrice);
     }
 
 
-    runEngine(n: number){
+    runEngine(n: number) {
         let _sell, _buy;
-        setInterval(()=>{
+        setInterval(() => {
             console.log(
                 this.buyOrders.length,
                 this.sellOrders.length,
@@ -89,32 +95,30 @@ export default class MatchingEngine{
             )
             const sell = _sell || this.sellOrders.shift();
             const buy = _buy || this.buyOrders.shift();
-            if(sell.basePrice === buy.basePrice){
+            if (sell.basePrice === buy.basePrice) {
                 // TODO: change users' balances
-                if(sell.sellAmount > buy.sellAmount){
+                if (sell.sellAmount > buy.sellAmount) {
                     sell.sellAmount = sell.sellAmount - buy.sellAmount;
                     sell.buyAmount = sell.buyAmount - buy.buyAmount;
                     _sell = sell;
                     this.matchedOrders.push(buy);
                 }
-                else if(sell.sellAmount < buy.sellAmount){
+                else if (sell.sellAmount < buy.sellAmount) {
                     buy.sellAmount = buy.sellAmount - sell.sellAmount;
                     buy.buyAmount = buy.buyAmount - sell.buyAmount;
                     _buy = buy;
                     this.matchedOrders.push(sell);
                 }
-                else{
+                else {
                     this.matchedOrders.push(buy);
                     this.matchedOrders.push(sell);
                 }
             }
-        }, n * 10**3); 
+        }, n * 10 ** 3);
     }
 
 
-    run(){
+    run() {
         this.runEngine(5);
     }
 }
-
-

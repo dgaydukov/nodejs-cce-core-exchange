@@ -1,3 +1,7 @@
+/**
+ * Application entry point
+ */
+
 require('dotenv').config();
 import * as Koa from 'koa';
 import * as Router from 'koa-router';
@@ -34,7 +38,7 @@ router.get('/', async (ctx: Koa.Context) => {
 app.use(router.routes());
 
 
-(async()=>{
+(async () => {
     await app.listen(process.env.APP_PORT);
     console.log(`core exchange is running... `);
 })();
@@ -67,7 +71,7 @@ const tradePairs = [
 ];
 balancer.init(numberOfUsers, currencies, tradePairs);
 
-tradePairs.map(pair=>{
+tradePairs.map(pair => {
     const engine = new MatchingEngine(balancer, pair);
     const numberOfOrders = 10000;
     const timeInterval = 30;
