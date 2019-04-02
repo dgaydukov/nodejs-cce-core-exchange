@@ -29,23 +29,25 @@ cd nodejs-cce-core-exchange
 # install
 npm i
 
+# copy env variables
+cp .env.tpl .env
+
 # run the project
 npm start
 ```
 
-You can also run dockerized version of this app
+You can also run dockerized version of this app:
 ```shell
-# copy env variables
-cp .env.tpl .env
-
 # build and run app
 docker-compose up -d --build
 ```
 
+In case you want to stop dockerized version, just type `docker-compose down`. This will kill docker container and stop app.
+
 
 ### Built With
 
-* [Node.js v10](https://nodejs.org/fr/blog/release/v10.0.0/)
+* [Node.js v10.15.0](https://nodejs.org/fr/blog/release/v10.15.0/)
 
 
 
