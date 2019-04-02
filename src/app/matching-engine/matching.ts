@@ -1,17 +1,28 @@
 import { guid, getRand } from '../helpers';
-import { OrderType, Order } from './interfaces';
+import { OrderType, Order, Match } from './interfaces';
 import BalanceService from '../balance-service/balance';
 
 
 export default class MatchingEngine{
     service: BalanceService;
-
     /**
      * The sorting for the sell is descending and for the buy is ascending
      */
-    sellOrders = [];
-    buyOrders = [];
-    matchedOrders = [];
+    sellOrders: Order[];
+    buyOrders: Order[];
+    matchedOrders: Match[];
+
+    constructor(service: BalanceService){
+        this.service = service;
+        this.sellOrders = [];
+        this.buyOrders = [];
+        this.matchedOrders = [];
+    }
+
+    init(){
+        
+    }
+
 
     addOrder(type: OrderType, list: Order[], userId: string, basePrice: number, sellAmount: number, buyAmount: number){
         const item = {

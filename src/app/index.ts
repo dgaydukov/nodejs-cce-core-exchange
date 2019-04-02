@@ -4,8 +4,16 @@ import * as Router from 'koa-router';
 import * as bodyParser from 'koa-bodyparser';
 import * as HttpStatus from 'http-status-codes';
 const cors = require('@koa/cors');
-import MatchingEngine from './matching-engine/matching';
 
+import MatchingEngine from './matching-engine/matching';
+import BalanceService from './balance-service/balance';
+
+const balancer = new BalanceService();
+balancer.init();
+
+const engine = new MatchingEngine(balancer);
+engine.init();
+engine.run();
 
 const app = new Koa();
 const router = new Router({
@@ -37,6 +45,3 @@ app.use(router.routes());
     await app.listen(process.env.APP_PORT);
     console.log(`core exchange is running... `);
 })();
-
-const engine = new MatchingEngine();
-engine.run();
