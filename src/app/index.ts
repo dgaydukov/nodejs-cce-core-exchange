@@ -67,9 +67,10 @@ const tradePairs = [
 ];
 balancer.init(numberOfUsers, currencies, tradePairs);
 
-
-const engine = new MatchingEngine(balancer);
-const numberOfOrders = 10000;
-const timeInterval = 30;
-engine.init(numberOfOrders, timeInterval);
-engine.run();
+tradePairs.map(pair=>{
+    const engine = new MatchingEngine(balancer, pair);
+    const numberOfOrders = 10000;
+    const timeInterval = 30;
+    engine.init(numberOfOrders, timeInterval);
+    engine.run();
+});

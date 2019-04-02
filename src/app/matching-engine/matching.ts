@@ -1,21 +1,22 @@
 import { guid, getRand } from '../helpers';
 import { OrderType, Order, Match } from './interfaces';
 import BalanceService from '../balance-service/balance';
+import { TradePair } from '../balance-service/interfaces';
 
 
 export default class MatchingEngine{
     service: BalanceService;
+    tradePair: TradePair;
     /**
      * The sorting for the sell is descending and for the buy is ascending
      */
     sellOrders: Order[];
     buyOrders: Order[];
     matchedOrders: Match[];
-
-    basePrice = 10;
     
-    constructor(service: BalanceService){
+    constructor(service: BalanceService, tradePair: TradePair){
         this.service = service;
+        this.tradePair = tradePair;
         this.sellOrders = [];
         this.buyOrders = [];
         this.matchedOrders = [];
@@ -27,7 +28,17 @@ export default class MatchingEngine{
      * @param timeInterval 
      */
     init(numberOfOrders: number, timeInterval: number){
-        
+        const step = Math.ceil(numberOfOrders/timeInterval);
+        const interval = setInterval(()=>{
+            if(timeInterval === 0){
+                clearInterval(interval);
+            }
+            timeInterval--;
+            for(let i = 0; i < step; i++){
+                this.fillSellOrders();
+                this.fillBuyOrders();
+            }
+        }, 1000);
     }
 
 
@@ -36,7 +47,7 @@ export default class MatchingEngine{
             orderId: guid(),
             type,
             time: new Date(),
-            pairId: '',
+            pairId: this.tradePair.pairId,
             userId,
             sellAmount,
             buyAmount,
@@ -53,22 +64,18 @@ export default class MatchingEngine{
         list.splice(index, 0, item);
     }
 
-    fillSellOrders(n: number){
-        setInterval(()=>{
-            const userId = '';
-            const sellAmount = getRand(1, 10);
-            const basePrice = this.basePrice/2 + getRand(0, this.basePrice);
-            this.addOrder(OrderType.Sell, this.sellOrders, userId, basePrice, sellAmount, basePrice * sellAmount);
-        }, n * 10**3);
+    fillSellOrders(){
+        const userId = '';
+        const sellAmount = getRand(1, 10);
+        const basePrice = this.tradePair.baseRate/2 + getRand(0, this.tradePair.baseRate);
+        this.addOrder(OrderType.Sell, this.sellOrders, userId, basePrice, sellAmount, basePrice * sellAmount);
     }
 
-    fillBuyOrders(n: number){
-        setInterval(()=>{
-            const userId = '';
-            const buyAmount = getRand(1, 10) * this.basePrice;
-            const basePrice = this.basePrice - getRand(0, this.basePrice/2);
-            this.addOrder(OrderType.Buy, this.buyOrders, userId, basePrice, buyAmount, buyAmount * basePrice);
-        }, n * 10**3);
+    fillBuyOrders(){
+        const userId = '';
+        const buyAmount = getRand(1, 10) * this.tradePair.baseRate;
+        const basePrice = this.tradePair.baseRate - getRand(0, this.tradePair.baseRate/2);
+        this.addOrder(OrderType.Buy, this.buyOrders, userId, basePrice, buyAmount, buyAmount * basePrice);
     }
 
 
@@ -106,9 +113,7 @@ export default class MatchingEngine{
 
 
     run(){
-        // this.fillSellOrders(1);
-        // this.fillBuyOrders(1);
-        // this.runEngine(5);
+        this.runEngine(5);
     }
 }
 
